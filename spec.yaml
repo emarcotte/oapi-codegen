@@ -1,0 +1,30 @@
+openapi: 3.0.0
+
+info:
+  title: Test file
+  version: '1.0'
+
+paths:
+  /v1/things:
+    get:
+      operationId: GetThings
+      responses:
+        '200':
+          description: Happy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyType'
+
+components:
+  schemas:
+    MyType:
+      type: object
+      required:
+        - goodbye
+      properties:
+        hello:
+          type: string
+        goodbye:
+          type: number
+
