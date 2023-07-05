@@ -5,7 +5,7 @@ permissions:
   id-token: write
   contents: write
 
-env:
+#env:
   # ALL_CARGO_DIST_TARGET_ARGS: --target=x86_64-unknown-linux-gnu --target=x86_64-apple-darwin --target=x86_64-pc-windows-msvc 
   # ALL_CARGO_DIST_INSTALLER_ARGS: ''
 
