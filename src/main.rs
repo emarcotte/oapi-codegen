@@ -23,6 +23,16 @@ fn load_api<P: AsRef<Path>>(p: P) -> Result<OpenAPI, GeneratorError> {
     Ok(api)
 }
 
+#[cfg(test)]
+#[test]
+fn test_load() {
+    assert!(load_api("./spec.yaml").is_ok());
+    assert!(matches!(
+        load_api("./specz.yaml"),
+        Err(GeneratorError::SourceReadError(_))
+    ));
+}
+
 fn generate_service_trait(api: &OpenAPI) -> Result<(), GeneratorError> {
     let mut scope = codegen::Scope::new();
     let mut new_trait = codegen::Trait::new("ServiceHandler");
