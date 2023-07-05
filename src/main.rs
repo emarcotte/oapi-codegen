@@ -1,8 +1,8 @@
+use openapiv3::OpenAPI;
 use std::fs::File;
 use std::io::{self, Read};
 use std::path::Path;
 use thiserror::Error;
-use openapiv3::OpenAPI;
 
 #[derive(Error, Debug)]
 pub enum GeneratorError {
@@ -11,10 +11,7 @@ pub enum GeneratorError {
     #[error("YAML schema parse error")]
     SchemaParseError(#[from] serde_yaml::Error),
     #[error("Missing operationId for path {path}, verb {verb}")]
-    MissingOperationID {
-        path: String,
-        verb: String,
-    },
+    MissingOperationID { path: String, verb: String },
 }
 
 fn load_api<P: AsRef<Path>>(p: P) -> Result<OpenAPI, GeneratorError> {
@@ -24,6 +21,16 @@ fn load_api<P: AsRef<Path>>(p: P) -> Result<OpenAPI, GeneratorError> {
 
     let api = serde_yaml::from_str::<OpenAPI>(&content)?;
     Ok(api)
+}
+
+#[cfg(test)]
+#[test]
+fn test_load() {
+    assert!(load_api("./spec.yaml").is_ok());
+    assert!(matches!(
+        load_api("./specz.yaml"),
+        Err(GeneratorError::SourceReadError(_))
+    ));
 }
 
 fn generate_service_trait(api: &OpenAPI) -> Result<(), GeneratorError> {
@@ -45,13 +52,15 @@ fn generate_service_trait(api: &OpenAPI) -> Result<(), GeneratorError> {
                 let request_type = codegen::Struct::new(&format!("{}Request", operation_id));
                 let response_type = codegen::Enum::new(&format!("{}Response", operation_id));
                 let mut return_type = codegen::Type::new("Result");
-                return_type.generic(request_type.ty())
+                return_type
+                    .generic(request_type.ty())
                     .generic(response_type.ty());
 
-               scope.push_struct(request_type); 
-               scope.push_enum(response_type); 
+                scope.push_struct(request_type);
+                scope.push_enum(response_type);
 
-                let mut new_fn = new_trait.new_fn(operation_id)
+                new_trait
+                    .new_fn(operation_id)
                     .arg_mut_self()
                     .ret(return_type);
             }
