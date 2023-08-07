@@ -9,7 +9,7 @@ edition = "2021"
 codegen = "0.2.0"
 nutype = { features=["serde", "regex"], version="0.3.1" }
 openapiv3 = "1.0.2"
-regex = "1.8.4"
+regex = "1.9.3"
 serde = "1.0.166"
 serde_yaml = "0.9.22"
 thiserror = "1.0.41"
