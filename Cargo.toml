@@ -11,5 +11,5 @@ nutype = { features=["serde", "regex"], version="0.3.1" }
 openapiv3 = "1.0.3"
 regex = "1.10.2"
 serde = "1.0.168"
-serde_yaml = "0.9.25"
+serde_yaml = "0.9.27"
 thiserror = "1.0.50"
