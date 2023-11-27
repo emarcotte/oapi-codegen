@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 codegen = "0.2.0"
-nutype = { features=["serde", "regex"], version="0.3.1" }
+nutype = { features=["serde", "regex"], version="0.4.0" }
 openapiv3 = "1.0.3"
 regex = "1.10.2"
 serde = "1.0.192"
