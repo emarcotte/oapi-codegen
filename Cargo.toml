@@ -10,6 +10,6 @@ codegen = "0.2.0"
 nutype = { features=["serde", "regex"], version="0.4.0" }
 openapiv3 = "2.0.0"
 regex = "1.10.2"
-serde = "1.0.193"
+serde = "1.0.195"
 serde_yaml = "0.9.29"
 thiserror = "1.0.53"
